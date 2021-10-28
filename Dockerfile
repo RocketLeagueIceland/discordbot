@@ -4,6 +4,7 @@ FROM node:latest
 RUN mkdir -p /usr/src/bot
 WORKDIR /usr/src/bot
 
+#install chromium for html2image/puppeteer
 RUN apt-get update \
     && apt-get install -y wget gnupg \
     && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
@@ -12,15 +13,13 @@ RUN apt-get update \
     && apt-get install -y google-chrome-stable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf libxss1 \
       --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
-
 RUN apt-get update && apt-get install -y chromium
 RUN chromium --version
 
+# install npm packages
 COPY package.json /usr/src/bot
-# Copy and Install our bot
 RUN npm install
-
-# Our precious bot
+# Copy files to container
 COPY . /usr/src/bot
 
 # Start me!
