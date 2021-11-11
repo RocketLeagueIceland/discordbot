@@ -334,7 +334,11 @@ const streamerChecker = async () => {
         const { users } = data;
         if (users.length > 1) {
           console.log('There are more than one user by the name "' + streamer + '"');
-          break;
+          continue;
+        }
+        if (users.length == 0) {
+          console.log(`${streamer} has changed there twitchname `);
+          continue;
         }
         const id = users[0]._id;
         const streamsURL = 'https://api.twitch.tv/kraken/streams/' + id;
@@ -363,7 +367,11 @@ const streamerChecker = async () => {
         const { users } = data;
         if (users.length > 1) {
           console.log('There are more than one user by the name "' + streamer + '"');
-          break;
+          continue;
+        }
+        if (users.length == 0) {
+          console.log(`${streamer} has changed there twitchname `);
+          continue;
         }
         const id = users[0]._id;
         const streamsURL = 'https://api.twitch.tv/kraken/streams/' + id;
