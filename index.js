@@ -24,6 +24,9 @@ bot.on("messageCreate", async (message) => {
   if (message.content == '!stormur') {
     message.reply("Stormur er heiti vindhraðabils, sem svarar til 9 vindstiga (20,8 - 24,4 m/s) á vindstigakvarðanum (Beaufortskvarðanum). Veðurstofan gefur út stormviðvörun, þegar spáð er vindhraða yfir 20 m/s.")
   }
+  if (message.content == '!leaderboard') {
+    message.reply("https://rocketleague.tracker.network/rocket-league/leaderboards/playlist/all/default?page=1&playlist=13&continent=eu&country=is")
+  }
   if (message.content == '!kartoflan') {
     message.reply("Kartoflan er heit! Kartofla hefur verið að sjá um liquipedia síðu fyrir Turf deildina. Checkaðu á henni hér: https://liquipedia.net/rocketleague/Icelandic_Esports_League/Season_3/League_Play.") 
   }
