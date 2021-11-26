@@ -151,6 +151,8 @@ bot.on("messageCreate", async (message) => {
       .addField('!kartoflan', 'Prófaðu bara ef þú þorir.' || '.', true)
       .addField('!staðan', 'Býr til mynd út frá núverandi stöðu Turf deildarinnar á Toornament.', true)
       .addField('!leaderboard', 'Sýnir hlekk að 3v3 ranked lista yfir íslandi.', true)
+      .addField('!leaderboard 2s', 'Sýnir hlekk að 2v2 ranked lista yfir íslandi.', true)
+      .addField('!leaderboard 1s', 'Sýnir hlekk að 1v1 ranked lista yfir íslandi.', true)
     let text = 'commands'
     message.reply({ content: text, embeds: [exampleEmbed] });
   }
