@@ -24,27 +24,80 @@ bot.on("messageCreate", async (message) => {
   if (message.content == '!stormur') {
     message.reply("Stormur er heiti vindhraðabils, sem svarar til 9 vindstiga (20,8 - 24,4 m/s) á vindstigakvarðanum (Beaufortskvarðanum). Veðurstofan gefur út stormviðvörun, þegar spáð er vindhraða yfir 20 m/s.")
   }
-  if (message.content == '!leaderboard') {
-    message.reply("https://rocketleague.tracker.network/rocket-league/leaderboards/playlist/all/default?page=1&playlist=13&continent=eu&country=is")
-  }
   if (message.content == '!kartoflan') {
-    message.reply("Kartoflan er heit! Kartofla hefur verið að sjá um liquipedia síðu fyrir Turf deildina. Checkaðu á henni hér: https://liquipedia.net/rocketleague/Icelandic_Esports_League/Season_3/League_Play.") 
+    message.reply("Kartoflan er heit! Kartofla hefur verið að sjá um liquipedia síðu fyrir Turf deildina. Checkaðu á henni hér: https://liquipedia.net/rocketleague/Icelandic_Esports_League/Season_3/League_Play.")
   }
   if (message.content == '!mammsa') {
-    message.reply("MÓÐIR ALLRAR TÖLFRÆÐI") 
+    message.reply("MÓÐIR ALLRAR TÖLFRÆÐI")
+  }
+  // if (message.content == '!dingo') {
+  // let url = "https://api.tracker.gg/api/v2/rocket-league/standard/profile/steam/dingoremote"
+  // const { data } = await axios.get(url,
+  //   {
+  //     headers: {
+  //       'User-Agent': "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:87.0) Gecko/20100101 Firefox/87.0"
+  //     }
+  //   });
+
+
+  // onevoneRating = data.data.segments.find(o => o.attributes.playlistId == 10).stats.rating.value
+  // twovtwoRating = data.data.segments.find(o => o.attributes.playlistId == 11).stats.rating.value
+  // threevthreeRating = data.data.segments.find(o => o.attributes.playlistId == 13).stats.rating.value
+  // hoopsRating = data.data.segments.find(o => o.attributes.playlistId == 27).stats.rating.value
+  // }
+  // if (message.content == '!leaderboard') {
+  //   message.reply("https://rocketleague.tracker.network/rocket-league/leaderboards/playlist/all/default?page=1&playlist=13&continent=eu&country=is")
+  // }
+  if (message.content == '!leaderboard') {
+    let url2 = 'https://api.tracker.gg/api/v1/rocket-league/standard/leaderboards?type=playlist&platform=all&board=default&country=is&playlist=13&take=100'
+
+    const { data } = await axios.get(url2,
+      {
+        headers: {
+          'User-Agent': "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:87.0) Gecko/20100101 Firefox/87.0"
+        }
+      });
+
+    firstplace = data.data.items[0]
+    secondplace = data.data.items[1]
+    thirdplace = data.data.items[2]
+    fourthplace = data.data.items[3]
+    fifthplace = data.data.items[4]
+
+    const exampleEmbed = new MessageEmbed()
+    .setColor('#0099ff')
+    .setTitle('Núverandi risar í 3v3')
+    .setURL('https://rocketleague.tracker.network/rocket-league/leaderboards/playlist/all/default?page=1&playlist=13&continent=eu&country=is')
+    .setDescription('Þessi listi sýnir topp 5 bestu 3v3 spilara landsins.')
+    .addFields(
+      { name: '1. sæti :trophy:', value: `${firstplace.owner.metadata.platformUserHandle} --- ${firstplace.value} mmr` },
+      { name: '2. sæti :second_place:', value: `${secondplace.owner.metadata.platformUserHandle} --- ${secondplace.value} mmr` },
+      { name: '3. sæti :third_place:', value: `${thirdplace.owner.metadata.platformUserHandle} --- ${thirdplace.value} mmr` },
+      { name: '4. sæti', value: `${fourthplace.owner.metadata.platformUserHandle} --- ${fourthplace.value} mmr` },
+      { name: '5. sæti', value: `${fifthplace.owner.metadata.platformUserHandle} --- ${fifthplace.value} mmr` },
+    )
+
+    let text = 'damn, þetta eru góðir spilarar!'
+    message.reply({ content: text, embeds: [exampleEmbed] });
+    //channel.send({ embeds: [exampleEmbed] });
+
+
+    //message.reply(data.data.platformInfo.platformUserHandle + ' hoops: ' + twovtwoRating);
+    //message.reply(JSON.stringify(data).substring(1, 1980));
   }
   if (message.content == '!hjálp') {
     const exampleEmbed = new MessageEmbed()
-            .setColor('#34e8eb')
-            .addField('!stormur', 'Prófaðu bara ef þú þorir.' || '.', true)
-            .addField('!kartoflan', 'Prófaðu bara ef þú þorir.' || '.', true)
-            .addField('!staðan', 'Býr til mynd út frá núverandi stöðu Turf deildarinnar á Toornament.', true)
-          let text = 'commands'
-          message.reply({ content: text, embeds: [exampleEmbed] });
+      .setColor('#34e8eb')
+      .addField('!stormur', 'Prófaðu bara ef þú þorir.' || '.', true)
+      .addField('!kartoflan', 'Prófaðu bara ef þú þorir.' || '.', true)
+      .addField('!staðan', 'Býr til mynd út frá núverandi stöðu Turf deildarinnar á Toornament.', true)
+      .addField('!leaderboard', 'Sýnir hlekk að 3v3 ranked lista yfir íslandi.', true)
+    let text = 'commands'
+    message.reply({ content: text, embeds: [exampleEmbed] });
   }
-  if (message.content == "!staðan" || message.content == "!sta[an" || message.content == "!stadan") { 
+  if (message.content == "!staðan" || message.content == "!sta[an" || message.content == "!stadan") {
 
-    try{
+    try {
       console.log('fetching data...')
       const { data } = await axios.get('https://play.toornament.com/en_GB/tournaments/4866403712109051904/stages/4886808537895821312/groups/4886808538936008721/');
       // Load HTML we fetched in the previous line
@@ -53,12 +106,12 @@ bot.on("messageCreate", async (message) => {
       console.log('loading to cheerio...')
       const $ = cheerio.load(data);
       console.log('loaded to cheerio')
-      
+
       const overallStandings = $('.ranking-item');
-      
+
       console.log('collection data to array...')
       let toornamentStandingsArray = []
-  
+
       overallStandings.each((i, el) => {
         // console.log($(el).children)
         let rank = parseInt($(el).children('div:nth-child(1)').text().trim(), 10)
@@ -76,7 +129,7 @@ bot.on("messageCreate", async (message) => {
         toornamentStandingsArray.push({ name, played, won, lost, gameswon, gameslost, points })
       });
       console.log('data collected to array')
-      
+
       console.log('adding images to data in array')
       for (i = 0; i < toornamentStandingsArray.length; i++) {
         if (toornamentStandingsArray[i].name === 'LAVA esports')
@@ -271,10 +324,10 @@ bot.on("messageCreate", async (message) => {
       
       </html>`;
 
-      const puppeteer = { args: [ '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-accelerated-2d-canvas', '--no-first-run', '--headless', '--no-zygote', '--disable-gpu' ], headless: true, ignoreHTTPSErrors: true };
+      const puppeteer = { args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-accelerated-2d-canvas', '--no-first-run', '--headless', '--no-zygote', '--disable-gpu'], headless: true, ignoreHTTPSErrors: true };
 
 
-  
+
       console.log('html created');
       console.log('creating image...');
       const images = await nodeHtmlToImage({
@@ -286,11 +339,11 @@ bot.on("messageCreate", async (message) => {
       })
       console.log('image created');
       console.log('creating message...');
-  
+
       message.channel.send({ files: [{ attachment: images }] })
       console.log('message sent');
     }
-    catch(error){
+    catch (error) {
       console.log(error)
     }
   }
@@ -348,14 +401,14 @@ const streamerChecker = async () => {
         const { data: data2 } = await axios.get(streamsURL, { headers: header });
         // ... and make the final request
         stream = data2.stream;
-      
+
         if (!stream) {
           console.log(`${streamers[currentStreamerIndex].streamer} stopped streaming`)
           streamers[i].isOnline = false;
           fs.writeFile('streamers.json', JSON.stringify(streamers), (err) => {
             // throws an error, you could also catch it here
             if (err) throw err;
-      
+
             // success case, the file was saved
             console.log('current standings updated');
           });
@@ -435,7 +488,7 @@ const streamerChecker = async () => {
             .addField('viewers', `${viewers}` || '.', true)
             .setImage(preview.medium || '.');
           let text = '**' + streamer + '**' + ` er með útsendingu í leiknum ${game}. Fylgist með hér: ${url}`
-          if(game === 'Just Chatting'){
+          if (game === 'Just Chatting') {
             text = '**' + streamer + '**' + ` er með útsendingu og er bara að spjalla. Fylgist með hér: ${url}`
           }
           channel.send({ content: text, embeds: [exampleEmbed] });
