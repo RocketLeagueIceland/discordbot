@@ -1,13 +1,11 @@
-const { Client, Intents, MessageEmbed, MessageAttachment } = require('discord.js');
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
-
+const { Client, Intents, MessageEmbed, MessageAttachment, Collection } = require('discord.js');
 const nodeHtmlToImage = require('node-html-to-image')
 const axios = require("axios");
 const cheerio = require("cheerio");
 const request = require('superagent');
 const fs = require('fs');
 
-const bot = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] }); //Setting up the bot variable. In the discord.js doc you will see they use "client". It's similar but I prefer to use bot.
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] }); //Setting up the bot variable. In the discord.js doc you will see they use "client". It's similar but I prefer to use bot.
 const CONFIG = require('./config.json'); //Including our config.json file will give us the possibility to use the informations it contains.
 
 //Setting up a prefix variable
@@ -17,9 +15,31 @@ let rawdata = fs.readFileSync('streamers.json');
 let streamers = JSON.parse(rawdata);
 let currentStreamerIndex = 0;
 
+client.commands = new Collection();
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
+for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+	client.commands.set(command.data.name, command);
+}
 
-bot.on("messageCreate", async (message) => {
+client.on('interactionCreate', async interaction => {
+	if (!interaction.isCommand()) return;
+
+	const command = client.commands.get(interaction.commandName);
+
+	if (!command) return;
+
+	try {
+		await command.execute(interaction);
+	} catch (error) {
+		console.error(error);
+		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+	}
+});
+  
+
+client.on("messageCreate", async (message) => {
 
   if (message.content == '!stormur') {
     message.reply("Stormur er heiti vindhraðabils, sem svarar til 9 vindstiga (20,8 - 24,4 m/s) á vindstigakvarðanum (Beaufortskvarðanum). Veðurstofan gefur út stormviðvörun, þegar spáð er vindhraða yfir 20 m/s.")
@@ -410,10 +430,10 @@ bot.on("messageCreate", async (message) => {
   }
 });
 
-bot.on('ready', async () => { //When the bot is ready, we do. the following things:
-  bot.user.setStatus('online'); //Telling discord we are online.
-  bot.user.setActivity("!hjálp fyrir commands."); //Setting our dicord "playing" status to a defined text
-  console.log(`Logged in as ${bot.user.tag}`); //Sending a message into the console saying that we are logging in as (usertag). Can be usefull when you have multiple bots running on the same machine
+client.on('ready', async () => { //When the bot is ready, we do. the following things:
+  client.user.setStatus('online'); //Telling discord we are online.
+  client.user.setActivity("!hjálp fyrir commands."); //Setting our dicord "playing" status to a defined text
+  console.log(`Logged in as ${client.user.tag}`); //Sending a message into the console saying that we are logging in as (usertag). Can be usefull when you have multiple bots running on the same machine
   console.log('Bot is connected...');
 
 
@@ -501,7 +521,7 @@ const streamerChecker = async () => {
         console.log(stream)
 
         const channelID = '738015390042554489';
-        const channel = await bot.channels.fetch(channelID);
+        const channel = await client.channels.fetch(channelID);
 
         if (!stream) {
           // streamer is still offline
@@ -560,4 +580,4 @@ const streamerChecker = async () => {
 }
 
 //Bot Logins
-bot.login(CONFIG.token); //Logging in: will use the token contained into the config.json to connect to the discord a
+client.login(CONFIG.token); //Logging in: will use the token contained into the config.json to connect to the discord a
