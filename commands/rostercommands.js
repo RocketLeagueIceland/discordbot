@@ -65,10 +65,10 @@ module.exports = {
 
       case lava:
         fields = [
-          { name: 'EmilVald', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/EmilVald/overview` },
-          { name: 'Vaddimah', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/vaddimah/overview` },
-          { name: 'Paxole', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/PaxoleOne/overview` },
-          { name: 'BNZ', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/brynjarorn97/overview` },
+          { name: 'EmilVald', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/EmilVald/overview)` },
+          { name: 'Vaddimah', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/vaddimah/overview)` },
+          { name: 'Paxole', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/PaxoleOne/overview)` },
+          { name: 'BNZ', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/brynjarorn97/overview)` },
         ];
         url = 'https://lavaesports.com/';
         image = 'https://i.ibb.co/5TY3FL5/Lava-logo-transparent.png';
@@ -76,10 +76,10 @@ module.exports = {
 
       case thor:
         fields = [
-          { name: 'Kartofla', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/Kartofla/overview` },
-          { name: 'Hemmigumm', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/hemmigumm/overview` },
-          { name: 'Danni Juice', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/76561198172429331/overview` },
-          { name: 'Smívar', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/smivar/overview` },
+          { name: 'Kartofla', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/Kartofla/overview)` },
+          { name: 'Hemmigumm', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/hemmigumm/overview)` },
+          { name: 'Danni Juice', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/76561198172429331/overview)` },
+          { name: 'Smívar', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/smivar/overview)` },
         ];
         url = 'https://thorsport.is/';
         image = 'https://i.ibb.co/0BgDcTy/thor-akureyri-vector-logo.png';
@@ -87,10 +87,10 @@ module.exports = {
 
       case rafik:
         fields = [
-          { name: 'Smushball', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/smushballs/overview` },
-          { name: 'Atli', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/aunnsteinsson/overview` },
-          { name: 'Óli', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/olitr/overview` },
-          { name: 'Kraken', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/76561198126269198/overview` },
+          { name: 'Smushball', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/smushballs/overview)` },
+          { name: 'Atli', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/aunnsteinsson/overview)` },
+          { name: 'Óli', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/olitr/overview)` },
+          { name: 'Kraken', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/76561198126269198/overview)` },
         ];
         url = 'https://rafithrottir.keflavik.is/';
         image = 'https://i.ibb.co/1mhQ1fs/RAFIK-logo-resized.png';
@@ -98,10 +98,10 @@ module.exports = {
 
       case kr:
         fields = [
-          { name: 'steb', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/stebbano/overview` },
-          { name: 'ousic', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/ousic/overview` },
-          { name: 'jappi', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/76561198004730453/overview` },
-          { name: 'JM', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/JMtheOG/overview` },
+          { name: 'steb', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/stebbano/overview)` },
+          { name: 'ousic', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/ousic/overview)` },
+          { name: 'jappi', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/76561198004730453/overview)` },
+          { name: 'JM', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/JMtheOG/overview)` },
         ];
         url = 'https://www.facebook.com/KResports2019/';
         image = 'https://i.ibb.co/DKQdDGM/KR-png.png';
@@ -109,10 +109,10 @@ module.exports = {
 
       case midnightBulls:
         fields = [
-          { name: 'Bobbi', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/CMBobbi/overview` },
-          { name: 'Haxfaðir', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/76561198284400165/overview` },
-          { name: 'Snazz', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/snassi2607/overview` },
-          { name: 'Klobbi', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/76561198172398909/overview` },
+          { name: 'Bobbi', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/CMBobbi/overview)` },
+          { name: 'Haxfaðir', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/76561198284400165/overview)` },
+          { name: 'Snazz', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/snassi2607/overview)` },
+          { name: 'Klobbi', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/76561198172398909/overview)` },
         ];
         url = 'https://www.mbl.is/sport/esport/2021/09/13/nylidar_midnight_bulls_komu_a_ovart/';
         image = 'https://i.ibb.co/f4Nz5Hf/MB-resized.png';
@@ -120,10 +120,10 @@ module.exports = {
 
       case somnio:
         fields = [
-          { name: 'Bafga', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/76561198164429718/overview` },
-          { name: 'Stormur', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/Pungurinn/overview` },
-          { name: 'Snibb Snabb', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/76561198052958613/overview` },
-          { name: 'Dabbi789', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/76561198024045703/overview` },
+          { name: 'Bafga', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/76561198164429718/overview)` },
+          { name: 'Stormur', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/Pungurinn/overview)` },
+          { name: 'Snibb Snabb', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/76561198052958613/overview)` },
+          { name: 'Dabbi789', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/76561198024045703/overview)` },
         ];
         url = 'https://www.facebook.com/SomnioGaming/';
         image = 'https://i.ibb.co/KbcVZ5s/Somnio-logo-new-resized.png';
@@ -131,10 +131,10 @@ module.exports = {
 
       case t354:
         fields = [
-          { name: 'Cereal', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/DontEatMyCereal/overview` },
-          { name: 'flurry97', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/juicebrik/overview` },
-          { name: 'Bjarnifraendi', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/bjarnifraendi/overview` },
-          { name: 'Allifret', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/allifret/overview` },
+          { name: 'Cereal', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/DontEatMyCereal/overview)` },
+          { name: 'flurry97', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/juicebrik/overview)` },
+          { name: 'Bjarnifraendi', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/bjarnifraendi/overview)` },
+          { name: 'Allifret', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/allifret/overview)` },
         ];
         url = 'https://354gaming.is/';
         image = 'https://i.ibb.co/L1HvpJ5/354v2-250px.png';
@@ -142,14 +142,15 @@ module.exports = {
 
       case breakingSad:
         fields = [
-          { name: 'lothiN\'', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/Lothin/overview` },
-          { name: 'sizophrenic', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/sizophrenic/overview` },
-          { name: 'Handygoon', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/Handygoon/overview` },
-          { name: 'Vano', value: `https://rocketleague.tracker.network/rocket-league/profile/steam/VanoRL/overview` },
+          { name: 'lothiN\'', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/Lothin/overview)` },
+          { name: 'sizophrenic', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/sizophrenic/overview)` },
+          { name: 'Handygoon', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/Handygoon/overview)` },
+          { name: 'Vano', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/VanoRL/overview)` },
         ];
         url = 'https://rocketleague.is';
-        image = 'https://ibb.co/Mc4nD0g';
-
+        image = 'https://i.ibb.co/D9y4D21/bslogo512.png';
+        break;
+        
       case pandaBois:
         // your code here
         description = `Það á eftir að skrá spilarana í ${teamName}.`;
@@ -197,15 +198,13 @@ module.exports = {
 
 
     const exampleEmbed = new MessageEmbed()
-      .setColor('#0099ff')
+      .setColor('#1c2e4a')
       .setTitle(`${teamName}`)
       .setURL(url)
       .setDescription(description)
       .addFields(...fields)
       .setThumbnail(image)
 
-    let text = `${teamName}!`
-
-    await interaction.reply({ content: text, embeds: [exampleEmbed] });
+    await interaction.reply({ content: null, embeds: [exampleEmbed] });
   },
 };
