@@ -68,111 +68,14 @@ client.on("messageCreate", async (message) => {
   // if (message.content == '!leaderboard') {
   //   message.reply("https://rocketleague.tracker.network/rocket-league/leaderboards/playlist/all/default?page=1&playlist=13&continent=eu&country=is")
   // }
-  if (message.content == '!leaderboard' || message.content == '!leaderboard 3s') {
-    let url2 = 'https://api.tracker.gg/api/v1/rocket-league/standard/leaderboards?type=playlist&platform=all&board=default&country=is&playlist=13&take=100'
-
-    const { data } = await axios.get(url2,
-      {
-        headers: {
-          'User-Agent': "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:87.0) Gecko/20100101 Firefox/87.0"
-        }
-      });
-
-    firstplace = data.data.items[0]
-    secondplace = data.data.items[1]
-    thirdplace = data.data.items[2]
-    fourthplace = data.data.items[3]
-    fifthplace = data.data.items[4]
-
-    const exampleEmbed = new MessageEmbed()
-    .setColor('#0099ff')
-    .setTitle('Núverandi risar í 3v3')
-    .setURL('https://rocketleague.tracker.network/rocket-league/leaderboards/playlist/all/default?page=1&playlist=13&continent=eu&country=is')
-    .setDescription('Þessi listi sýnir topp 5 bestu 3v3 spilara landsins.')
-    .addFields(
-      { name: '1. sæti :trophy:', value: `${firstplace.owner.metadata.platformUserHandle} --- ${firstplace.value} mmr` },
-      { name: '2. sæti :second_place:', value: `${secondplace.owner.metadata.platformUserHandle} --- ${secondplace.value} mmr` },
-      { name: '3. sæti :third_place:', value: `${thirdplace.owner.metadata.platformUserHandle} --- ${thirdplace.value} mmr` },
-      { name: '4. sæti', value: `${fourthplace.owner.metadata.platformUserHandle} --- ${fourthplace.value} mmr` },
-      { name: '5. sæti', value: `${fifthplace.owner.metadata.platformUserHandle} --- ${fifthplace.value} mmr` },
-    )
-
-    let text = 'damn, þetta eru góðir spilarar!'
-    message.reply({ content: text, embeds: [exampleEmbed] });
-  }
-  if (message.content == '!leaderboard 1s') {
-    let url2 = 'https://api.tracker.gg/api/v1/rocket-league/standard/leaderboards?type=playlist&platform=all&board=default&country=is&playlist=10&take=100'
-    
-    const { data } = await axios.get(url2,
-      {
-        headers: {
-          'User-Agent': "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:87.0) Gecko/20100101 Firefox/87.0"
-        }
-      });
-
-    firstplace = data.data.items[0]
-    secondplace = data.data.items[1]
-    thirdplace = data.data.items[2]
-    fourthplace = data.data.items[3]
-    fifthplace = data.data.items[4]
-
-    const exampleEmbed = new MessageEmbed()
-    .setColor('#0099ff')
-    .setTitle('Núverandi risar í 1v1')
-    .setURL('https://rocketleague.tracker.network/rocket-league/leaderboards/playlist/all/default?page=1&playlist=13&continent=eu&country=is')
-    .setDescription('Þessi listi sýnir topp 5 bestu 1v1 spilara landsins.')
-    .addFields(
-      { name: '1. sæti :trophy:', value: `${firstplace.owner.metadata.platformUserHandle} --- ${firstplace.value} mmr` },
-      { name: '2. sæti :second_place:', value: `${secondplace.owner.metadata.platformUserHandle} --- ${secondplace.value} mmr` },
-      { name: '3. sæti :third_place:', value: `${thirdplace.owner.metadata.platformUserHandle} --- ${thirdplace.value} mmr` },
-      { name: '4. sæti', value: `${fourthplace.owner.metadata.platformUserHandle} --- ${fourthplace.value} mmr` },
-      { name: '5. sæti', value: `${fifthplace.owner.metadata.platformUserHandle} --- ${fifthplace.value} mmr` },
-    )
-
-    let text = 'damn, þetta eru góðir spilarar!'
-    message.reply({ content: text, embeds: [exampleEmbed] });
-  }
-  if (message.content == '!leaderboard 2s') {
-    let url2 = 'https://api.tracker.gg/api/v1/rocket-league/standard/leaderboards?type=playlist&platform=all&board=default&country=is&playlist=11&take=100'
-
-    const { data } = await axios.get(url2,
-      {
-        headers: {
-          'User-Agent': "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:87.0) Gecko/20100101 Firefox/87.0"
-        }
-      });
-
-    firstplace = data.data.items[0]
-    secondplace = data.data.items[1]
-    thirdplace = data.data.items[2]
-    fourthplace = data.data.items[3]
-    fifthplace = data.data.items[4]
-
-    const exampleEmbed = new MessageEmbed()
-    .setColor('#0099ff')
-    .setTitle('Núverandi risar í 2v2')
-    .setURL('https://rocketleague.tracker.network/rocket-league/leaderboards/playlist/all/default?page=1&playlist=13&continent=eu&country=is')
-    .setDescription('Þessi listi sýnir topp 5 bestu 2v2 spilara landsins.')
-    .addFields(
-      { name: '1. sæti :trophy:', value: `${firstplace.owner.metadata.platformUserHandle} --- ${firstplace.value} mmr` },
-      { name: '2. sæti :second_place:', value: `${secondplace.owner.metadata.platformUserHandle} --- ${secondplace.value} mmr` },
-      { name: '3. sæti :third_place:', value: `${thirdplace.owner.metadata.platformUserHandle} --- ${thirdplace.value} mmr` },
-      { name: '4. sæti', value: `${fourthplace.owner.metadata.platformUserHandle} --- ${fourthplace.value} mmr` },
-      { name: '5. sæti', value: `${fifthplace.owner.metadata.platformUserHandle} --- ${fifthplace.value} mmr` },
-    )
-
-    let text = 'damn, þetta eru góðir spilarar!'
-    message.reply({ content: text, embeds: [exampleEmbed] });
-  }
   if (message.content == '!hjálp') {
     const exampleEmbed = new MessageEmbed()
-      .setColor('#34e8eb')
+      .setColor('#1c2e4a')
       .addField('!stormur', 'Prófaðu bara ef þú þorir.' || '.', true)
       .addField('!kartoflan', 'Prófaðu bara ef þú þorir.' || '.', true)
       .addField('!staðan', 'Býr til mynd út frá núverandi stöðu Turf deildarinnar á Toornament.', true)
-      .addField('!leaderboard', 'Sýnir hlekk að 3v3 ranked lista yfir íslandi.', true)
-      .addField('!leaderboard 2s', 'Sýnir hlekk að 2v2 ranked lista yfir íslandi.', true)
-      .addField('!leaderboard 1s', 'Sýnir hlekk að 1v1 ranked lista yfir íslandi.', true)
+      .addField('/roster', 'Sýnir hlekk að 3v3 ranked lista yfir íslandi.', true)
+      .addField('/leaderboard', 'Sýnir hlekk að 2v2 ranked lista yfir íslandi.', true)
     let text = 'commands'
     message.reply({ content: text, embeds: [exampleEmbed] });
   }
