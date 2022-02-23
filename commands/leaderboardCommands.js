@@ -63,7 +63,7 @@ module.exports = {
         break;
         
       case dropshot:
-        playlistNumber =  ;
+        playlistNumber =  29;
         playlistName = 'dropshot';
         break;
 
