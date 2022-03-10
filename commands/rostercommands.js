@@ -83,7 +83,7 @@ module.exports = {
           { name: 'Kartofla', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/Kartofla/overview)` },
           { name: 'Hemmigumm', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/hemmigumm/overview)` },
           { name: 'Danni Juice', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/76561198172429331/overview)` },
-          { name: 'Smívar', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/smivar/overview)` },
+          { name: 'RAFn', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/76561198996617383/overview)` },
         ];
         url = 'https://thorsport.is/';
         image = 'https://i.ibb.co/0BgDcTy/thor-akureyri-vector-logo.png';
@@ -154,7 +154,7 @@ module.exports = {
         url = 'https://rocketleague.is';
         image = 'https://i.ibb.co/D9y4D21/bslogo512.png';
         break;
-        
+
       case pandaBois:
         fields = [
           { name: 'Stuttbuxur', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/gisliorn/overview)` },
@@ -234,10 +234,13 @@ module.exports = {
 
       case pushinP:
         fields = [
-          { name: 'Lið ekki skráð', value: `Upplýsingar koma um leið og lið hefur verið skráð í deildina` },
+          { name: 'RoadmanGK3', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/psn/RoadmanGK3/overview)` },
+          { name: 'Aronrafn', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/Aronrafn/overview)` },
+          { name: 'MoonMamba', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/MoonMamba/overview)` },
+          { name: 'Krilli ', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/steam/pabbi4/overview)` },
         ];
         url = 'https://rocketleague.is';
-        // image = 'https://ibb.co/Bzx1TYr';
+        image = 'https://i.ibb.co/QjfXrdr/PushinP.png';
         break;
 
       case biddadeins:
@@ -253,10 +256,12 @@ module.exports = {
 
       case clb:
         fields = [
-          { name: 'Lið ekki skráð', value: `Upplýsingar koma um leið og lið hefur verið skráð í deildina` },
+          { name: 'AYOBABE', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/epic/AYOBABE/overview)` },
+          { name: 'CertifiedNaldo', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/psn/CertifiedNaldo/overview)` },
+          { name: 'IceNogla', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/psn/IceNogla./overview)` },
+          { name: 'Skorrz00', value: `[Tracker](https://rocketleague.tracker.network/rocket-league/profile/psn/Skorrz00/overview)` },
         ];
         url = 'https://rocketleague.is';
-        // image = 'https://ibb.co/Bzx1TYr';
         break;
 
       case t354Academy:
@@ -295,5 +300,5 @@ module.exports = {
       .setThumbnail(image)
 
     await interaction.reply({ content: null, embeds: [exampleEmbed] });
-  },
+  }
 };

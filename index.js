@@ -7,6 +7,8 @@ const fs = require('fs');
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] }); //Setting up the bot variable. In the discord.js doc you will see they use "client". It's similar but I prefer to use bot.
 const CONFIG = require('./config.json'); //Including our config.json file will give us the possibility to use the informations it contains.
+const { Stream } = require('stream');
+const { not } = require('cheerio/lib/api/traversing');
 
 //Setting up a prefix variable
 const prefix = CONFIG.prefix; //In this example, I'm setting up the prefix in the config.json. I could have simply used "const prefix = '!';"
@@ -19,25 +21,25 @@ client.commands = new Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
-	client.commands.set(command.data.name, command);
+  const command = require(`./commands/${file}`);
+  client.commands.set(command.data.name, command);
 }
 
 client.on('interactionCreate', async interaction => {
-	if (!interaction.isCommand()) return;
+  if (!interaction.isCommand()) return;
 
-	const command = client.commands.get(interaction.commandName);
+  const command = client.commands.get(interaction.commandName);
 
-	if (!command) return;
+  if (!command) return;
 
-	try {
-		await command.execute(interaction);
-	} catch (error) {
-		console.error(error);
-		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-	}
+  try {
+    await command.execute(interaction);
+  } catch (error) {
+    console.error(error);
+    await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+  }
 });
-  
+
 
 client.on("messageCreate", async (message) => {
 
@@ -339,147 +341,126 @@ client.on('ready', async () => { //When the bot is ready, we do. the following t
   console.log(`Logged in as ${client.user.tag}`); //Sending a message into the console saying that we are logging in as (usertag). Can be usefull when you have multiple bots running on the same machine
   console.log('Bot is connected...');
 
-
-  try {
-    streamerChecker();
-
-  } catch (error) {
-    console.log(error);
-  }
+  streamerChecker();
 });
 
 const streamerChecker = async () => {
 
   setInterval(async () => {
 
-    const header = {
-      'Client-ID': '3zzmx0l2ph50anf78iefr6su9d8byj8',
-      'Accept': 'application/vnd.twitchtv.v5+json'
-    };
+    try {
+      const authurl = `https://id.twitch.tv/oauth2/token?client_id=${CONFIG.twitchClientId}&client_secret=${CONFIG.twitchSecret}&grant_type=client_credentials`;
+      let { data } = await axios.post(authurl);
+      token = data.access_token;
 
-    console.log(streamers)
+      const header = {
+        'Client-ID': CONFIG.twitchClientId,
+        'Authorization': `Bearer ${token}`
+      };
+      streamerurl = `https://api.twitch.tv/helix/streams?user_login=wolf_masterz`;
 
-    for (i = 0; i < streamers.length; i++) {
-      currentStreamerIndex = i
-      let streamer = streamers[i].streamer;
-      console.log(`checking if streamer ${streamer} is online`)
-      let isOnline = streamers[i].isOnline;
-      let lastOnline = streamers[i].lastOnline;
+      let onlineStreamer = []
+      // console.log(streamers)
 
-      if (isOnline) {
-        // Store the URL to request users...
-        const usersURL = 'https://api.twitch.tv/kraken/users?login=' + streamer
-        // ... and make the request
-        let { data } = await axios.get(usersURL, { headers: header });
-        const { users } = data;
-        if (users.length > 1) {
-          console.log('There are more than one user by the name "' + streamer + '"');
-          continue;
-        }
-        if (users.length == 0) {
-          console.log(`${streamer} has changed there twitchname `);
-          continue;
-        }
-        const id = users[0]._id;
-        const streamsURL = 'https://api.twitch.tv/kraken/streams/' + id;
-        const { data: data2 } = await axios.get(streamsURL, { headers: header });
-        // ... and make the final request
-        stream = data2.stream;
-
-        if (!stream) {
-          console.log(`${streamers[currentStreamerIndex].streamer} stopped streaming`)
-          streamers[i].isOnline = false;
-          fs.writeFile('streamers.json', JSON.stringify(streamers), (err) => {
-            // throws an error, you could also catch it here
-            if (err) throw err;
-
-            // success case, the file was saved
-            console.log('current standings updated');
-          });
+      for (i = 0; i < streamers.length; i++) {
+        if (!streamers[i].isOnline ) { // or streamer was online less than an hour ago or something.
+          let streamer = streamers[i].streamer;
+          streamerurl += `&user_login=${streamer}`;
+        } else {
+          onlineStreamer.push(streamers[i].streamer)
         }
       }
-      else {
 
-        // Store the URL to request users...
-        const usersURL = 'https://api.twitch.tv/kraken/users?login=' + streamer
-        // ... and make the request
-        let { data } = await axios.get(usersURL, { headers: header });
-        const { users } = data;
-        if (users.length > 1) {
-          console.log('There are more than one user by the name "' + streamer + '"');
-          continue;
-        }
-        if (users.length == 0) {
-          console.log(`${streamer} has changed there twitchname `);
-          continue;
-        }
-        const id = users[0]._id;
-        const streamsURL = 'https://api.twitch.tv/kraken/streams/' + id;
-        const { data: data2 } = await axios.get(streamsURL, { headers: header });
-        // ... and make the final request
-        stream = data2.stream;
-        // Get all possible flags from the program...
-        // Attempt to get stream information from the response
-        // Get all possible flags from the program...
-        console.log(stream)
+      console.log(`streamers online already according to file count: ${onlineStreamer.length}`)
+      
+      let res = await axios.get(streamerurl, { headers: header });
+      data = res.data.data;
+      // console.log(data)
+      console.log(`Not offline but currently streaming according to twitch: ${data.length}`)
+      
+      for (i = 0; i < data.length; i++) {
+        let streaminfo = data[i];
+        let isMature = streaminfo.is_mature;
+        if(isMature) continue;
+        let userid = streaminfo.user_id
+        let streamerName = streaminfo.user_login
+        let game = streaminfo.game_name;
+        let title = streaminfo.title;
+        let viewerCount = streaminfo.viewer_count;
+        let preview = streaminfo.thumbnail_url.replace('{width}','1920').replace('{height}','1080')
+        let url = `https://www.twitch.tv/${streamerName}`
+        let [res2, res3] = await Promise.all([axios.get(`https://api.twitch.tv/helix/users/follows?to_id=${userid}&first=1`, { headers: header }), axios.get(`https://api.twitch.tv/helix/users?id=${userid}`, { headers: header })]);
+        // console.log('=======================')
+        // console.log(res2.data, res3.data)
+        let logo = res3.data.data[0].profile_image_url
+        let followers = res2.data.total
 
-        const channelID = '738015390042554489';
+        // console.log('WHAT IS GOING ON HERE?')
+        // console.log(isMature, userid, streamerName, game, title, viewerCount, preview, url, logo, followers)
+
+        const exampleEmbed = new MessageEmbed()
+          .setColor('#34e8eb')
+          .setTitle(streamerName || '.')
+          .setURL(url || '.')
+          .setAuthor(streamerName || '.', logo || '.')
+          .setDescription(title || '.')
+          .setThumbnail(logo || '.')
+          .addField('Game', game || '.', true)
+          .addField('followers', `${followers}` || '.', true)
+          .addField('viewers', `${viewerCount}` || '.', true)
+          .setImage(preview || '.');
+        let text = '**' + streamerName + '**' + ` er með útsendingu í leiknum ${game}. Fylgist með hér: ${url}`
+        if (game === 'Just Chatting') {
+          text = '**' + streamer + '**' + ` er með útsendingu og er bara að spjalla. Fylgist með hér: ${url}`
+        }
+        // const channelID = '738015390042554489';
+        const channelID = '738089976931156019';
         const channel = await client.channels.fetch(channelID);
+        channel.send({ content: text, embeds: [exampleEmbed] });
 
-        if (!stream) {
-          // streamer is still offline
-          console.log(`${streamers[i].streamer} is not streaming`)
-        }
-        else if (stream.game !== 'Rocket League' && stream.game !== 'Just Chatting') {
-          console.log(stream.game)
-          console.log(`${stream.channel.display_name} is not streaming Rocket League or chatting`)
-        }
-        else {
-          // streamer is online
-          let streamer = stream.channel.display_name
-          let url = stream.channel.url
-          let game = stream.game
-          let viewers = stream.viewers
-          let createdAtnew = Date(stream.created_at)
-          let matureStatus = stream.channel.mature
-          let status = stream.channel.status
-          let logo = stream.channel.logo
-          let preview = stream.preview
-          let partneredStatus = stream.channel.partner
-          let followers = stream.channel.followers
-          console.log(`game: ${game}, viewers: ${viewers}, createdAtnew: ${createdAtnew}, matureStatus: ${matureStatus}`)
-          console.log(`status: ${status}, partneredStatus: ${partneredStatus}, followers: ${followers}`)
+        let index = streamers.map(function (element) {return element.streamer;}).indexOf(streamerName);
+        streamers[index].isOnline = true
+        console.log(`streamer ${streamers[index].streamer} is now online.`)
+      }
 
-          streamers[currentStreamerIndex].isOnline = true
-
-          fs.writeFile('streamers.json', JSON.stringify(streamers), (err) => {
-            // throws an error, you could also catch it here
-            if (err) throw err;
-
-            // success case, the file was saved
-            console.log('current standings updated');
-          });
-
-          const exampleEmbed = new MessageEmbed()
-            .setColor('#34e8eb')
-            .setTitle(streamer || '.')
-            .setURL(url || '.')
-            .setAuthor(streamer || '.', logo || '.')
-            .setDescription(status || '.')
-            .setThumbnail(logo || '.')
-            .addField('Game', game || '.', true)
-            .addField('followers', `${followers}` || '.', true)
-            .addField('viewers', `${viewers}` || '.', true)
-            .setImage(preview.medium || '.');
-          let text = '**' + streamer + '**' + ` er með útsendingu í leiknum ${game}. Fylgist með hér: ${url}`
-          if (game === 'Just Chatting') {
-            text = '**' + streamer + '**' + ` er með útsendingu og er bara að spjalla. Fylgist með hér: ${url}`
-          }
-          channel.send({ content: text, embeds: [exampleEmbed] });
+      streamerurl = `https://api.twitch.tv/helix/streams`;
+      for(i=0; i < onlineStreamer.length; i++){
+        if(i==0) {
+          streamerurl += `?user_login=${onlineStreamer[i]}`;
+        } else {
+          streamerurl += `&user_login=${onlineStreamer[i]}`;
         }
       }
+
+      res = await axios.get(streamerurl, { headers: header });
+      data = res.data.data;
+
+      let stillOnline = []
+      for (i = 0; i < data.length; i++) {
+        let streamerName = data[i].user_login
+        stillOnline.push(streamerName)
+      }
+
+      let notOnlineAnymore = onlineStreamer.filter(n => !stillOnline.includes(n))
+      console.log(onlineStreamer, stillOnline, notOnlineAnymore)
+
+      for(i=0;i<notOnlineAnymore.length;i++){
+        console.log(`streamer ${notOnlineAnymore[i]} just went offline`)
+        let index = streamers.map(function (element) {return element.streamer;}).indexOf(notOnlineAnymore[i]);
+        streamers[index].isOnline = false;
+      }
+
+      fs.writeFile('streamers.json', JSON.stringify(streamers), (err) => {
+        // throws an error, you could also catch it here
+        if (err) throw err;
+        // success case, the file was saved
+        console.log('current standings updated');
+      });
     }
-  }, 60000);
+    catch (error) {
+      console.log(error)
+    }
+  }, 6000);
 }
 
 //Bot Logins
