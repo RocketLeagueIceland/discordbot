@@ -71,6 +71,7 @@ client.on("messageCreate", async (message) => {
       .addField('!staðan', 'Býr til mynd út frá núverandi stöðu Turf deildarinnar á Toornament.', true)
       .addField('/roster', 'Sýnir hlekk að 3v3 ranked lista yfir íslandi.', true)
       .addField('/leaderboard', 'Sýnir hlekk að 2v2 ranked lista yfir íslandi.', true)
+      .addField('/addstreamer', 'Hægt er að sækja um að láta bottann láta vita þegar þú ferð live á twitch. Sóttu um með þessu command.', true)
     let text = 'commands'
     message.reply({ content: text, embeds: [exampleEmbed] });
   }
@@ -343,7 +344,7 @@ const streamCheckerSheetsVersion = async () => {
 
     try {
 
-      const sheetRange = 'Sheet1!A2:B150'
+      const sheetRange = 'streamers!A2:B150'
 
       const auth = new google.auth.GoogleAuth({
         keyFile: "credentials.json",
