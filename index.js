@@ -2,20 +2,13 @@ const { Client, Intents, MessageEmbed, MessageAttachment, Collection } = require
 const nodeHtmlToImage = require('node-html-to-image')
 const axios = require("axios");
 const cheerio = require("cheerio");
-const request = require('superagent');
 const fs = require('fs');
+const { google } = require('googleapis');
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] }); //Setting up the bot variable. In the discord.js doc you will see they use "client". It's similar but I prefer to use bot.
 const CONFIG = require('./config.json'); //Including our config.json file will give us the possibility to use the informations it contains.
-const { Stream } = require('stream');
-const { not } = require('cheerio/lib/api/traversing');
 
-//Setting up a prefix variable
-const prefix = CONFIG.prefix; //In this example, I'm setting up the prefix in the config.json. I could have simply used "const prefix = '!';"
-
-let rawdata = fs.readFileSync('streamers.json');
-let streamers = JSON.parse(rawdata);
-let currentStreamerIndex = 0;
+const streamersSpreadsheetId = "19vqDFkD83C4Ev5hXwGpW_vDTQ75IMR9ElqZ-2MiCRZw";
 
 client.commands = new Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -341,14 +334,44 @@ client.on('ready', async () => { //When the bot is ready, we do. the following t
   console.log(`Logged in as ${client.user.tag}`); //Sending a message into the console saying that we are logging in as (usertag). Can be usefull when you have multiple bots running on the same machine
   console.log('Bot is connected...');
 
-  streamerChecker();
+  streamCheckerSheetsVersion();
 });
 
-const streamerChecker = async () => {
+const streamCheckerSheetsVersion = async () => {
 
   setInterval(async () => {
 
     try {
+
+      const sheetRange = 'Sheet1!A2:B150'
+
+      const auth = new google.auth.GoogleAuth({
+        keyFile: "credentials.json",
+        scopes: "https://www.googleapis.com/auth/spreadsheets",
+      });
+
+      // Create client instance for auth
+      const googleClient = await auth.getClient();
+
+      // Instance of Google Sheets API
+      const googleSheets = google.sheets({ version: "v4", auth: googleClient });
+
+      // Read rows from spreadsheet
+      const getRows = await googleSheets.spreadsheets.values.get({
+        auth,
+        spreadsheetId: streamersSpreadsheetId,
+        range: sheetRange,
+      });
+
+      let sheetStreamers = [];
+      for (i = 0; i < getRows.data.values.length; i++) {
+        let sheetStreamer = {
+          "streamer": getRows.data.values[i][0],
+          "isOnline": getRows.data.values[i][1] == 'TRUE' ? true : false
+        }
+        sheetStreamers.push(sheetStreamer);
+      }
+
       const authurl = `https://id.twitch.tv/oauth2/token?client_id=${CONFIG.twitchClientId}&client_secret=${CONFIG.twitchSecret}&grant_type=client_credentials`;
       let { data } = await axios.post(authurl);
       token = data.access_token;
@@ -360,46 +383,42 @@ const streamerChecker = async () => {
       streamerurl = `https://api.twitch.tv/helix/streams?user_login=wolf_masterz`;
 
       let onlineStreamer = []
-      // console.log(streamers)
 
-      for (i = 0; i < streamers.length; i++) {
-        if (!streamers[i].isOnline ) { // or streamer was online less than an hour ago or something.
-          let streamer = streamers[i].streamer;
+      // collect streamers that are offline and online
+      for (i = 0; i < sheetStreamers.length; i++) {
+        if (!sheetStreamers[i].isOnline) { // or streamer was online less than an hour ago or something.
+          let streamer = sheetStreamers[i].streamer;
           streamerurl += `&user_login=${streamer}`;
         } else {
-          onlineStreamer.push(streamers[i].streamer)
+          onlineStreamer.push(sheetStreamers[i].streamer)
         }
       }
 
       console.log(`streamers online already according to file count: ${onlineStreamer.length}`)
-      
+
       let res = await axios.get(streamerurl, { headers: header });
       data = res.data.data;
-      // console.log(data)
       console.log(`Not offline but currently streaming according to twitch: ${data.length}`)
-      
+
+      // send message for all streamers that just went online
       for (i = 0; i < data.length; i++) {
         let streaminfo = data[i];
         let isMature = streaminfo.is_mature;
-        if(isMature) continue;
-        let userid = streaminfo.user_id
-        let streamerName = streaminfo.user_login
+        if (isMature) continue;
         let game = streaminfo.game_name;
+        if(game != 'Rocket League' && game != 'Just Chatting') continue;
+        let userid = streaminfo.user_id;
+        let streamerName = streaminfo.user_login;
         let title = streaminfo.title;
         let viewerCount = streaminfo.viewer_count;
-        let preview = streaminfo.thumbnail_url.replace('{width}','1920').replace('{height}','1080')
+        let preview = streaminfo.thumbnail_url.replace('{width}', '1920').replace('{height}', '1080')
         let url = `https://www.twitch.tv/${streamerName}`
         let [res2, res3] = await Promise.all([axios.get(`https://api.twitch.tv/helix/users/follows?to_id=${userid}&first=1`, { headers: header }), axios.get(`https://api.twitch.tv/helix/users?id=${userid}`, { headers: header })]);
-        // console.log('=======================')
-        // console.log(res2.data, res3.data)
         let logo = res3.data.data[0].profile_image_url
         let followers = res2.data.total
 
-        // console.log('WHAT IS GOING ON HERE?')
-        // console.log(isMature, userid, streamerName, game, title, viewerCount, preview, url, logo, followers)
-
         const exampleEmbed = new MessageEmbed()
-          .setColor('#34e8eb')
+          .setColor('#1c2e4a')
           .setTitle(streamerName || '.')
           .setURL(url || '.')
           .setAuthor(streamerName || '.', logo || '.')
@@ -411,21 +430,22 @@ const streamerChecker = async () => {
           .setImage(preview || '.');
         let text = '**' + streamerName + '**' + ` er með útsendingu í leiknum ${game}. Fylgist með hér: ${url}`
         if (game === 'Just Chatting') {
-          text = '**' + streamer + '**' + ` er með útsendingu og er bara að spjalla. Fylgist með hér: ${url}`
+          text = '**' + streamerName + '**' + ` er með útsendingu og er bara að spjalla. Fylgist með hér: ${url}`
         }
-        // const channelID = '738015390042554489';
-        const channelID = '738089976931156019';
+        const channelID = '738015390042554489';
+        // const channelID = '738089976931156019'; // channel for testing
         const channel = await client.channels.fetch(channelID);
         channel.send({ content: text, embeds: [exampleEmbed] });
 
-        let index = streamers.map(function (element) {return element.streamer;}).indexOf(streamerName);
-        streamers[index].isOnline = true
-        console.log(`streamer ${streamers[index].streamer} is now online.`)
+        let index = sheetStreamers.map(function (element) { return element.streamer; }).indexOf(streamerName);
+        sheetStreamers[index].isOnline = true
+        console.log(`streamer ${sheetStreamers[index].streamer} is now online.`)
       }
 
+      // create url for checking if streamers that were online are still online
       streamerurl = `https://api.twitch.tv/helix/streams`;
-      for(i=0; i < onlineStreamer.length; i++){
-        if(i==0) {
+      for (i = 0; i < onlineStreamer.length; i++) {
+        if (i == 0) {
           streamerurl += `?user_login=${onlineStreamer[i]}`;
         } else {
           streamerurl += `&user_login=${onlineStreamer[i]}`;
@@ -441,26 +461,41 @@ const streamerChecker = async () => {
         stillOnline.push(streamerName)
       }
 
+      // filter streamers that were online, but went offline
       let notOnlineAnymore = onlineStreamer.filter(n => !stillOnline.includes(n))
-      console.log(onlineStreamer, stillOnline, notOnlineAnymore)
 
-      for(i=0;i<notOnlineAnymore.length;i++){
+      // set streamer as offline who just went offline
+      for (i = 0; i < notOnlineAnymore.length; i++) {
         console.log(`streamer ${notOnlineAnymore[i]} just went offline`)
-        let index = streamers.map(function (element) {return element.streamer;}).indexOf(notOnlineAnymore[i]);
-        streamers[index].isOnline = false;
+        let index = sheetStreamers.map(function (element) { return element.streamer; }).indexOf(notOnlineAnymore[i]);
+        sheetStreamers[index].isOnline = false;
       }
 
-      fs.writeFile('streamers.json', JSON.stringify(streamers), (err) => {
-        // throws an error, you could also catch it here
-        if (err) throw err;
-        // success case, the file was saved
-        console.log('current standings updated');
+      // convert sheetStreamers for sheets
+      let convertedSheetStreamers = []
+      for (i = 0; i < sheetStreamers.length; i++) {
+        convertedSheetStreamers.push([sheetStreamers[i].streamer, sheetStreamers[i].isOnline])
+      }
+
+      // save newest iteration to google sheets
+
+      // Write row(s) to spreadsheet
+      await googleSheets.spreadsheets.values.update({
+        auth,
+        spreadsheetId: streamersSpreadsheetId,
+        range: sheetRange,
+        valueInputOption: "USER_ENTERED",
+        resource: {
+          values: convertedSheetStreamers,
+        },
       });
     }
+
     catch (error) {
       console.log(error)
     }
   }, 6000);
+
 }
 
 //Bot Logins
