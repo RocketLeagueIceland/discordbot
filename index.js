@@ -432,8 +432,8 @@ const streamCheckerSheetsVersion = async () => {
         if (game === 'Just Chatting') {
           text = '**' + streamerName + '**' + ` er með útsendingu og er bara að spjalla. Fylgist með hér: ${url}`
         }
-        // const channelID = '738015390042554489';
-        const channelID = '738089976931156019'; // channel for testing
+        const channelID = '738015390042554489';
+        // const channelID = '738089976931156019'; // channel for testing
         const channel = await client.channels.fetch(channelID);
         channel.send({ content: text, embeds: [exampleEmbed] });
 
