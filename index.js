@@ -496,7 +496,7 @@ const streamCheckerSheetsVersion = async () => {
     catch (error) {
       console.log(error)
     }
-  }, 6000);
+  }, 60000);
 
 }
 
