@@ -68,14 +68,13 @@ client.on("messageCreate", async (message) => {
       .setColor('#1c2e4a')
       .addField('!stormur', 'Prófaðu bara ef þú þorir.' || '.', true)
       .addField('!kartoflan', 'Prófaðu bara ef þú þorir.' || '.', true)
-      .addField('!staðan', 'Býr til mynd út frá núverandi stöðu Turf deildarinnar á Toornament.', true)
       .addField('/roster', 'Sýnir hlekk að 3v3 ranked lista yfir íslandi.', true)
       .addField('/leaderboard', 'Sýnir hlekk að 2v2 ranked lista yfir íslandi.', true)
       .addField('/addstreamer', 'Hægt er að sækja um að láta bottann láta vita þegar þú ferð live á twitch. Sóttu um með þessu command.', true)
     let text = 'commands'
     message.reply({ content: text, embeds: [exampleEmbed] });
   }
-  if (message.content == "!staðan" || message.content == "!sta[an" || message.content == "!stadan") {
+  if (message.content == "!staðanasdfasdf" || message.content == "!sta[anasdfasdf" || message.content == "!stadanasdfasdf") {
 
     try {
       console.log('fetching data...')
@@ -367,7 +366,7 @@ const streamCheckerSheetsVersion = async () => {
       let sheetStreamers = [];
       for (i = 0; i < getRows.data.values.length; i++) {
         let sheetStreamer = {
-          "streamer": getRows.data.values[i][0],
+          "streamer": getRows.data.values[i][0].toLowerCase(),
           "isOnline": getRows.data.values[i][1] == 'TRUE' ? true : false
         }
         sheetStreamers.push(sheetStreamer);
@@ -409,7 +408,7 @@ const streamCheckerSheetsVersion = async () => {
         let game = streaminfo.game_name;
         if(game != 'Rocket League' && game != 'Just Chatting') continue;
         let userid = streaminfo.user_id;
-        let streamerName = streaminfo.user_login;
+        let streamerName = streaminfo.user_login.toLowerCase();
         let title = streaminfo.title;
         let viewerCount = streaminfo.viewer_count;
         let preview = streaminfo.thumbnail_url.replace('{width}', '1920').replace('{height}', '1080')
@@ -433,12 +432,14 @@ const streamCheckerSheetsVersion = async () => {
         if (game === 'Just Chatting') {
           text = '**' + streamerName + '**' + ` er með útsendingu og er bara að spjalla. Fylgist með hér: ${url}`
         }
-        const channelID = '738015390042554489';
-        // const channelID = '738089976931156019'; // channel for testing
+        // const channelID = '738015390042554489';
+        const channelID = '738089976931156019'; // channel for testing
         const channel = await client.channels.fetch(channelID);
         channel.send({ content: text, embeds: [exampleEmbed] });
 
-        let index = sheetStreamers.map(function (element) { return element.streamer; }).indexOf(streamerName);
+        let index = sheetStreamers.map(function (element) { return element.streamer.toLowerCase(); }).indexOf(streamerName.toLowerCase());
+        console.log(index);
+        console.log(sheetStreamers[index]);
         sheetStreamers[index].isOnline = true
         console.log(`streamer ${sheetStreamers[index].streamer} is now online.`)
       }
@@ -468,7 +469,7 @@ const streamCheckerSheetsVersion = async () => {
       // set streamer as offline who just went offline
       for (i = 0; i < notOnlineAnymore.length; i++) {
         console.log(`streamer ${notOnlineAnymore[i]} just went offline`)
-        let index = sheetStreamers.map(function (element) { return element.streamer; }).indexOf(notOnlineAnymore[i]);
+        let index = sheetStreamers.map(function (element) { return element.streamer.toLowerCase(); }).indexOf(notOnlineAnymore[i].toLowerCase());
         sheetStreamers[index].isOnline = false;
       }
 
