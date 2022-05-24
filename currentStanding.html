@@ -1,172 +1,163 @@
 <!DOCTYPE html>
-    <html lang="en">
-    
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
-      <style>
-        body {
-          width: 1920px;
-          height:980px;
-        }
+<html lang="en">
 
-        .background {
-          background-image: url(https://i.ibb.co/Q6y5BX8/Current-Standings.png);
-          background-repeat: no-repeat;
-          height: 100vh;
-    
-          font-family: "MontBold";
-          font-family: 'Montserrat', sans-serif;
-          font-size: 39px;
-          color: white;
-          padding-top: 205px;
-        }
-    
-        .StandingsRow {
-          display: flex;
-          justify-content: flex-start;
-          padding-bottom: 10px;
-          padding-left: 165px;
-          height: 76px;
-        }
-    
-        .StandingsRow p {
-          padding-top: 8px;
-        }
-    
-        .pname {
-          width: 308px;
-          font-size: 37px;
-    
-        }
-    
-        .pplayed {
-          width: 197px;
-          text-align: center;
-        }
-    
-        .pwon {
-          width: 197px;
-          text-align: center;
-        }
-    
-        .plost {
-          width: 196px;
-          text-align: center;
-        }
-    
-        .pgameswon {
-          width: 196px;
-          text-align: center;
-        }
-    
-        .pgameslost {
-          width: 196px;
-          text-align: center;
-        }
-    
-        .ppoints {
-          width: 196px;
-          text-align: center;
-          font-family: "MontBlack";
-          font-family: 'Montserrat', sans-serif;
-        }
-    
-        .Logo {
-          height: 70px;
-          width: 70px;
-          margin-right: 75px;
-          margin-top: 33px;
-        }
-      </style>
-    </head>
-    <body>
-      <div class="background">
-        <div class="StandingsRow">
-          <img class="Logo" src="https://i.ibb.co/5TY3FL5/Lava-logo-transparent.png" alt=''></img>
-          <p class="pname">LAVA esports</p>
-          <p class="pplayed">9</p>
-          <p class="pwon">9</p>
-          <p class="plost">0</p>
-          <p class="pgameswon">27</p>
-          <p class="pgameslost">0</p>
-          <p class="ppoints">18</p>
-        </div>
-        <div class="StandingsRow">
-          <img class="Logo" src=${toornamentStandingsArray[1].name} alt=''></img>
-          <p class="pname">${toornamentStandingsArray[1].name}</p>
-          <p class="pplayed">${toornamentStandingsArray[1].played}</p>
-          <p class="pwon">${toornamentStandingsArray[1].won}</p>
-          <p class="plost">${toornamentStandingsArray[1].lost}</p>
-          <p class="pgameswon">${toornamentStandingsArray[1].gameswon}</p>
-          <p class="pgameslost">${toornamentStandingsArray[1].gameslost}</p>
-          <p class="ppoints">${toornamentStandingsArray[1].points}</p>
-        </div>
-        <div class="StandingsRow">
-          <img class="Logo" src=${toornamentStandingsArray[2].name} alt=''></img>
-          <p class="pname">${toornamentStandingsArray[2].name}</p>
-          <p class="pplayed">${toornamentStandingsArray[2].played}</p>
-          <p class="pwon">${toornamentStandingsArray[2].won}</p>
-          <p class="plost">${toornamentStandingsArray[2].lost}</p>
-          <p class="pgameswon">${toornamentStandingsArray[2].gameswon}</p>
-          <p class="pgameslost">${toornamentStandingsArray[2].gameslost}</p>
-          <p class="ppoints">${toornamentStandingsArray[2].points}</p>
-        </div>
-        <div class="StandingsRow">
-          <img class="Logo" src=${toornamentStandingsArray[3].name} alt=''></img>
-          <p class="pname">${toornamentStandingsArray[3].name}</p>
-          <p class="pplayed">${toornamentStandingsArray[3].played}</p>
-          <p class="pwon">${toornamentStandingsArray[3].won}</p>
-          <p class="plost">${toornamentStandingsArray[3].lost}</p>
-          <p class="pgameswon">${toornamentStandingsArray[3].gameswon}</p>
-          <p class="pgameslost">${toornamentStandingsArray[3].gameslost}</p>
-          <p class="ppoints">${toornamentStandingsArray[3].points}</p>
-        </div>
-        <div class="StandingsRow">
-          <img class="Logo" src=${toornamentStandingsArray[4].name} alt=''></img>
-          <p class="pname">${toornamentStandingsArray[4].name}</p>
-          <p class="pplayed">${toornamentStandingsArray[4].played}</p>
-          <p class="pwon">${toornamentStandingsArray[4].won}</p>
-          <p class="plost">${toornamentStandingsArray[4].lost}</p>
-          <p class="pgameswon">${toornamentStandingsArray[4].gameswon}</p>
-          <p class="pgameslost">${toornamentStandingsArray[4].gameslost}</p>
-          <p class="ppoints">${toornamentStandingsArray[4].points}</p>
-        </div>
-        <div class="StandingsRow">
-          <img class="Logo" src=${toornamentStandingsArray[5].name} alt=''></img>
-          <p class="pname">${toornamentStandingsArray[5].name}</p>
-          <p class="pplayed">${toornamentStandingsArray[5].played}</p>
-          <p class="pwon">${toornamentStandingsArray[5].won}</p>
-          <p class="plost">${toornamentStandingsArray[5].lost}</p>
-          <p class="pgameswon">${toornamentStandingsArray[5].gameswon}</p>
-          <p class="pgameslost">${toornamentStandingsArray[5].gameslost}</p>
-          <p class="ppoints">${toornamentStandingsArray[5].points}</p>
-        </div>
-        <div class="StandingsRow">
-          <img class="Logo" src=${toornamentStandingsArray[6].name} alt=''></img>
-          <p class="pname">${toornamentStandingsArray[6].name}</p>
-          <p class="pplayed">${toornamentStandingsArray[6].played}</p>
-          <p class="pwon">${toornamentStandingsArray[6].won}</p>
-          <p class="plost">${toornamentStandingsArray[6].lost}</p>
-          <p class="pgameswon">${toornamentStandingsArray[6].gameswon}</p>
-          <p class="pgameslost">${toornamentStandingsArray[6].gameslost}</p>
-          <p class="ppoints">${toornamentStandingsArray[6].points}</p>
-        </div>
-        <div class="StandingsRow">
-          <img class="Logo" src=${toornamentStandingsArray[7].name} alt=''></img>
-          <p class="pname">${toornamentStandingsArray[7].name}</p>
-          <p class="pplayed">${toornamentStandingsArray[7].played}</p>
-          <p class="pwon">${toornamentStandingsArray[7].won}</p>
-          <p class="plost">${toornamentStandingsArray[7].lost}</p>
-          <p class="pgameswon">${toornamentStandingsArray[7].gameswon}</p>
-          <p class="pgameslost">${toornamentStandingsArray[7].gameslost}</p>
-          <p class="ppoints">${toornamentStandingsArray[7].points}</p>
-        </div>
-      </div>
-    </body>
-    
-    </html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <style type="text/css">
+
+    @import url('http://fonts.cdnfonts.com/css/lemonmilk');
+
+    body {
+      width: 1920px;
+      height: 1080px;
+    }
+
+    .background {
+      background-image: url(https://i.ibb.co/PmZQzHw/Current-Standings.png);
+      background-repeat: no-repeat;
+      height: 100vh;
+
+      font-family: "Lemon/Milk", arial;
+      font-size: 45px;
+      color: white;
+      padding-top: 320px;
+    }
+
+    .StandingsRow {
+      display: flex;
+      justify-content: flex-start;
+      padding-bottom: 3px;
+      padding-left: 233px;
+      height: 85px;
+    }
+
+    .StandingsRow p {
+      margin-top: -5px;
+    }
+
+    .pname {
+      width: 462px;
+    }
+
+    .pplayed {
+      width: 100px;
+      padding-right: 10px;
+      text-align: center;
+    }
+
+    .pwon {
+      width: 100px;
+      text-align: center;
+    }
+
+    .plost {
+      width: 100px;
+      text-align: center;
+    }
+
+    .pgameswon {
+      width: 100px;
+      text-align: center;
+    }
+
+    .pgameslost {
+      width: 100px;
+      text-align: center;
+    }
+
+    .ppoints {
+      width: 100px;
+      text-align: center;
+      font-weight: 500;
+    }
+
+
+    .Logo {
+      height: 65px;
+      width: 65px;
+      margin-right: 35px;
+      margin-top: -4px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="background">
+    <div class="StandingsRow">
+      <img class="Logo" src="${toornamentStandingsArray[0].logo}" alt=''></img>
+      <p class="pname">LAVA esports</p>
+      <p class="pplayed">6</p>
+      <p class="pwon">6</p>
+      <p class="plost">0</p>
+      <p class="pgameswon">17</p>
+      <p class="ppoints">12</p>
+    </div>
+    <div class="StandingsRow">
+      <img class="Logo" src="${toornamentStandingsArray[1].logo}" alt=''></img>
+      <p class="pname">${toornamentStandingsArray[1].name}</p>
+      <p class="pplayed">${toornamentStandingsArray[1].played}</p>
+      <p class="pwon">${toornamentStandingsArray[1].won}</p>
+      <p class="plost">${toornamentStandingsArray[1].lost}</p>
+      <p class="pgameswon">${toornamentStandingsArray[1].plusminus}</p>
+      <p class="ppoints">${toornamentStandingsArray[1].points}</p>
+    </div>
+    <div class="StandingsRow">
+      <img class="Logo" src="${toornamentStandingsArray[2].logo}" alt=''></img>
+      <p class="pname">${toornamentStandingsArray[2].name}</p>
+      <p class="pplayed">${toornamentStandingsArray[2].played}</p>
+      <p class="pwon">${toornamentStandingsArray[2].won}</p>
+      <p class="plost">${toornamentStandingsArray[2].lost}</p>
+      <p class="pgameswon">${toornamentStandingsArray[2].plusminus}</p>
+      <p class="ppoints">${toornamentStandingsArray[2].points}</p>
+    </div>
+    <div class="StandingsRow">
+      <img class="Logo" src="${toornamentStandingsArray[3].logo}" alt=''></img>
+      <p class="pname">${toornamentStandingsArray[3].name}</p>
+      <p class="pplayed">${toornamentStandingsArray[3].played}</p>
+      <p class="pwon">${toornamentStandingsArray[3].won}</p>
+      <p class="plost">${toornamentStandingsArray[3].lost}</p>
+      <p class="pgameswon">${toornamentStandingsArray[3].plusminus}</p>
+      <p class="ppoints">${toornamentStandingsArray[3].points}</p>
+    </div>
+    <div class="StandingsRow">
+      <img class="Logo" src="${toornamentStandingsArray[4].logo}" alt=''></img>
+      <p class="pname">${toornamentStandingsArray[4].name}</p>
+      <p class="pplayed">${toornamentStandingsArray[4].played}</p>
+      <p class="pwon">${toornamentStandingsArray[4].won}</p>
+      <p class="plost">${toornamentStandingsArray[4].lost}</p>
+      <p class="pgameswon">${toornamentStandingsArray[4].plusminus}</p>
+      <p class="ppoints">${toornamentStandingsArray[4].points}</p>
+    </div>
+    <div class="StandingsRow">
+      <img class="Logo" src="${toornamentStandingsArray[5].logo}" alt=''></img>
+      <p class="pname">${toornamentStandingsArray[5].name}</p>
+      <p class="pplayed">${toornamentStandingsArray[5].played}</p>
+      <p class="pwon">${toornamentStandingsArray[5].won}</p>
+      <p class="plost">${toornamentStandingsArray[5].lost}</p>
+      <p class="pgameswon">${toornamentStandingsArray[5].plusminus}</p>
+      <p class="ppoints">${toornamentStandingsArray[5].points}</p>
+    </div>
+    <div class="StandingsRow">
+      <img class="Logo" src="${toornamentStandingsArray[6].logo}" alt=''></img>
+      <p class="pname">${toornamentStandingsArray[6].name}</p>
+      <p class="pplayed">${toornamentStandingsArray[6].played}</p>
+      <p class="pwon">${toornamentStandingsArray[6].won}</p>
+      <p class="plost">${toornamentStandingsArray[6].lost}</p>
+      <p class="pgameswon">${toornamentStandingsArray[6].plusminus}</p>
+      <p class="ppoints">${toornamentStandingsArray[6].points}</p>
+    </div>
+    <div class="StandingsRow">
+      <img class="Logo" src="${toornamentStandingsArray[7].logo}" alt=''></img>
+      <p class="pname">${toornamentStandingsArray[7].name}</p>
+      <p class="pplayed">${toornamentStandingsArray[7].played}</p>
+      <p class="pwon">${toornamentStandingsArray[7].won}</p>
+      <p class="plost">${toornamentStandingsArray[7].lost}</p>
+      <p class="pgameswon">${toornamentStandingsArray[7].plusminus}</p>
+      <p class="ppoints">${toornamentStandingsArray[7].points}</p>
+    </div>
+  </div>
+</body>
+
+</html>
