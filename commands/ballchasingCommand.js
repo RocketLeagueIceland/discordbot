@@ -3,6 +3,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const commandName = 'ballchasing';
 const season3 = 'tímabil-3'
 const season4 = 'tímabil-4'
+const season5 = 'tímabil-5'
 const optionName = 'season';
 
 module.exports = {
@@ -15,16 +16,21 @@ module.exports = {
         .setRequired(true)
         .addChoice(season4, season4)
         .addChoice(season3, season3)
+        .addChoice(season5, season5)
     ),
   async execute(interaction) {
 
     let option = interaction.options.getString(optionName);
-    let ballchasingUrl = 'https://ballchasing.com/group/arena-deildin-s4-rlis-7flsdy257b ';
+    let ballchasingUrl = 'https://ballchasing.com/group/arena-deildin-timabil-5-c143468n00';
 
     switch (option) {
 
+      case season5:
+        ballchasingUrl = 'https://ballchasing.com/group/arena-deildin-timabil-5-c143468n00';
+        break;
+
       case season4:
-        ballchasingUrl = 'https://ballchasing.com/group/arena-deildin-s4-rlis-7flsdy257b ';
+        ballchasingUrl = 'https://ballchasing.com/group/arena-deildin-s4-rlis-7flsdy257b';
         break;
 
       case season3:
