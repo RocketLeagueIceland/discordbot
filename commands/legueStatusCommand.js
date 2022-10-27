@@ -15,7 +15,7 @@ module.exports = {
 
     try {
       console.log('fetching data...')
-      const { data } = await axios.get('https://play.toornament.com/en_GB/tournaments/5396958141712015360/stages/5396992519904862208/groups/5396992520609505297/');
+      const { data } = await axios.get('https://play.toornament.com/en_GB/tournaments/6005815484662964224/stages/6019944245391966208/groups/6044355496923930624/');
       // Load HTML we fetched in the previous line
       console.log('data fetched.')
 
