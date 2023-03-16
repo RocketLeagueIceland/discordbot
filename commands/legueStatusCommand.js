@@ -1,7 +1,8 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
 const axios = require("axios");
-const nodeHtmlToImage = require('node-html-to-image')
+const nodeHtmlToImage = require('node-html-to-image');
+// const font2base64 = require('node-font2base64');
 const cheerio = require("cheerio");
 
 commandName = 'staðan';
@@ -15,7 +16,7 @@ module.exports = {
 
     try {
       console.log('fetching data...')
-      const { data } = await axios.get('https://play.toornament.com/en_GB/tournaments/5396958141712015360/stages/5396992519904862208/groups/5396992520609505297/');
+      const { data } = await axios.get('https://play.toornament.com/en_GB/tournaments/6441392792945721344/stages/6472425512940109824/groups/6482478112381247488/');
       // Load HTML we fetched in the previous line
       console.log('data fetched.')
 
@@ -48,25 +49,30 @@ module.exports = {
 
       console.log('adding images to data in array')
       for (i = 0; i < toornamentStandingsArray.length; i++) {
-        if (toornamentStandingsArray[i].name === 'LAVA esports')
+        if (toornamentStandingsArray[i].name === 'LAVA Esports')
           toornamentStandingsArray[i].logo = 'https://i.ibb.co/5TY3FL5/Lava-logo-transparent.png'
-        else if (toornamentStandingsArray[i].name === 'KR')
-          toornamentStandingsArray[i].logo = 'https://i.ibb.co/DKQdDGM/KR-png.png'
-        else if (toornamentStandingsArray[i].name === 'Þór Akureyri')
+        else if (toornamentStandingsArray[i].name === 'Breiðablik')
+          toornamentStandingsArray[i].logo = 'https://i.ibb.co/2vQsNcS/breidablik.png'
+        else if (toornamentStandingsArray[i].name === 'Þór')
           toornamentStandingsArray[i].logo = 'https://i.ibb.co/0BgDcTy/thor-akureyri-vector-logo.png'
-        else if (toornamentStandingsArray[i].name === 'Rafík')
-          toornamentStandingsArray[i].logo = 'https://i.ibb.co/1mhQ1fs/RAFIK-logo-resized.png'
-        else if (toornamentStandingsArray[i].name === 'Midnight Bulls')
-          toornamentStandingsArray[i].logo = 'https://i.ibb.co/f4Nz5Hf/MB-resized.png'
-        else if (toornamentStandingsArray[i].name === 'Somnio')
+        else if (toornamentStandingsArray[i].name === 'Suðurtak')
+          toornamentStandingsArray[i].logo = 'https://i.ibb.co/fHnwQCK/Su-urtak.png'
+        else if (toornamentStandingsArray[i].name === 'Víkingur Ólafsvík')
+          toornamentStandingsArray[i].logo = 'https://i.ibb.co/4m4zpr8/V.png'
+        else if (toornamentStandingsArray[i].name === 'Pushin P')
           toornamentStandingsArray[i].logo = 'https://i.ibb.co/KbcVZ5s/Somnio-logo-new-resized.png'
         else if (toornamentStandingsArray[i].name === 'Breaking Sad')
           toornamentStandingsArray[i].logo = 'https://i.ibb.co/dbPGgSB/Breaking-Sad.png'
-        else if (toornamentStandingsArray[i].name === '354 eSports')
+        else if (toornamentStandingsArray[i].name === '354 Esports')
           toornamentStandingsArray[i].logo = 'https://i.ibb.co/c3hGKpH/354e-Sports.png'
       }
       console.log('images added to data.')
       console.log('creating html...')
+
+
+
+      // const _data = font2base64.encodeToDataUrlSync('../my/awesome/font.ttf')
+
       let _htmlTemplate = `<!DOCTYPE html>
       <html lang="en">
       
@@ -79,7 +85,10 @@ module.exports = {
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
         <style>
           
-          @import url('http://fonts.cdnfonts.com/css/lemonmilk');
+          @font-face {
+            font-family: 'Lemonmilk';
+            src: url(https://drive.google.com/file/d/1gXJZp4caID-pm-YfaityFjOYLcxGi0fx/view?usp=share_link) format('opentype');
+          }
 
           body {
             width: 1920px;
@@ -87,11 +96,11 @@ module.exports = {
           }
       
           .background {
-            background-image: url(https://i.ibb.co/PmZQzHw/Current-Standings.png);
+            background-image: url(https://i.ibb.co/nzbK64Z/current-Standing.png);
             background-repeat: no-repeat;
             height: 100vh;
       
-            font-family: "Lemon/Milk", arial;
+            font-family: "Lemonmilk", arial;
             font-size: 45px;
             color: white;
             padding-top: 320px;
