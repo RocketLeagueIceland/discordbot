@@ -4,6 +4,7 @@ const commandName = 'ballchasing';
 const season3 = 'tímabil-3'
 const season4 = 'tímabil-4'
 const season5 = 'tímabil-5'
+const season6 = 'tímabil-6'
 const optionName = 'season';
 
 module.exports = {
@@ -17,13 +18,18 @@ module.exports = {
         .addChoice(season4, season4)
         .addChoice(season3, season3)
         .addChoice(season5, season5)
+        .addChoice(season6, season6)
     ),
   async execute(interaction) {
 
     let option = interaction.options.getString(optionName);
-    let ballchasingUrl = 'https://ballchasing.com/group/arena-deildin-timabil-5-c143468n00';
+    let ballchasingUrl = 'https://ballchasing.com/group/rlis-deildin-season-6-aawd9cfelp';
 
     switch (option) {
+
+      case season6:
+        ballchasingUrl = 'https://ballchasing.com/group/rlis-deildin-season-6-aawd9cfelp';
+        break;
 
       case season5:
         ballchasingUrl = 'https://ballchasing.com/group/arena-deildin-timabil-5-c143468n00';
