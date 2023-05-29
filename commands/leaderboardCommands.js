@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
 const axios = require("axios");
+const puppeteer = require('puppeteer');
 
 // úrvals deild
 commandName = 'leaderboard';
@@ -56,14 +57,14 @@ module.exports = {
         playlistNumber = 28;
         playlistName = 'rumble';
         break;
-        
+
       case hoops:
         playlistNumber = 27;
         playlistName = 'hoops';
         break;
-        
+
       case dropshot:
-        playlistNumber =  29;
+        playlistNumber = 29;
         playlistName = 'dropshot';
         break;
 
@@ -78,18 +79,70 @@ module.exports = {
 
     let url = `https://api.tracker.gg/api/v1/rocket-league/standard/leaderboards?type=playlist&platform=all&board=default&country=is&playlist=${playlistNumber}&take=100`
 
-    const { data } = await axios.get(url,
-      {
-        headers: {
-          'User-Agent': "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:87.0) Gecko/20100101 Firefox/87.0"
-        }
-      });
+    // const { data } = await axios.get(url,
+    //   {
+    //     headers: {
+    //       'User-Agent': "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:87.0) Gecko/20100101 Firefox/87.0"
+    //     }
+    //   });
 
-    firstplace = data.data.items[0]
-    secondplace = data.data.items[1]
-    thirdplace = data.data.items[2]
-    fourthplace = data.data.items[3]
-    fifthplace = data.data.items[4]
+
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
+
+    // Open a new page
+    const page = await browser.newPage();
+
+    // Configure the navigation timeout
+    await page.setDefaultNavigationTimeout(0);
+
+    // Simulate human interaction
+    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36');
+
+    // Go to the target URL
+    await page.goto(`https://rocketleague.tracker.network/rocket-league/leaderboards/playlist/all/default?page=1&playlist=${playlistNumber}&country=is`);
+
+    // Wait for a specific element to load on the page
+    await page.waitForSelector('span.trn-ign__username', { timeout: 20000 }); // Replace 'selector' with the CSS selector of the element you're waiting for
+    await page.waitForSelector('td.stat.highlight div', { timeout: 20000 }); // Replace 'selector' with the CSS selector of the element you're waiting for
+
+    // Add a delay (e.g., 2 seconds) to wait for additional data or components to load
+    await page.waitForTimeout(2000);
+
+    // Extract data from the page
+    const data = await page.evaluate(() => {
+
+      const selectorun = 'span.trn-ign__username'; // Replace with the selector you want to match
+      const allMatchingElementsun = document.querySelectorAll(selectorun);
+      const firstFiveMatchingElementsun = Array.prototype.slice.call(allMatchingElementsun, 0, 5);
+
+      const selectormmr = 'td.stat.highlight div'; // Replace with the selector you want to match
+      const allMatchingElements = document.querySelectorAll(selectormmr);
+      const firstFiveMatchingElements = Array.prototype.slice.call(allMatchingElements, 0, 5);
+
+      return [
+        {player: firstFiveMatchingElementsun[0].innerText, mmr: firstFiveMatchingElements[0].innerText},
+        {player: firstFiveMatchingElementsun[1].innerText, mmr: firstFiveMatchingElements[1].innerText},
+        {player: firstFiveMatchingElementsun[2].innerText, mmr: firstFiveMatchingElements[2].innerText},
+        {player: firstFiveMatchingElementsun[3].innerText, mmr: firstFiveMatchingElements[3].innerText},
+        {player: firstFiveMatchingElementsun[4].innerText, mmr: firstFiveMatchingElements[4].innerText},
+      ]
+    });
+
+    // Log the extracted data
+    console.log(data);
+
+    // Close the browser
+    await browser.close();
+
+    firstplace = data[0]
+    secondplace = data[1]
+    thirdplace = data[2]
+    fourthplace = data[3]
+    fifthplace = data[4]
+
 
     const exampleEmbed = new MessageEmbed()
       .setColor('#1c2e4a')
@@ -97,11 +150,11 @@ module.exports = {
       .setURL('https://rocketleague.tracker.network/rocket-league/leaderboards/playlist/all/default?page=1&playlist=13&continent=eu&country=is')
       .setDescription(`Þessi listi sýnir topp 5 bestu ${playlistName} spilara landsins.`)
       .addFields(
-        { name: '1. sæti :trophy:', value: `${firstplace.owner.metadata.platformUserHandle} --- ${firstplace.value} mmr` },
-        { name: '2. sæti :second_place:', value: `${secondplace.owner.metadata.platformUserHandle} --- ${secondplace.value} mmr` },
-        { name: '3. sæti :third_place:', value: `${thirdplace.owner.metadata.platformUserHandle} --- ${thirdplace.value} mmr` },
-        { name: '4. sæti', value: `${fourthplace.owner.metadata.platformUserHandle} --- ${fourthplace.value} mmr` },
-        { name: '5. sæti', value: `${fifthplace.owner.metadata.platformUserHandle} --- ${fifthplace.value} mmr` },
+        { name: '1. sæti :trophy:', value: `${firstplace.player} --- ${firstplace.mmr} mmr` },
+        { name: '2. sæti :second_place:', value: `${secondplace.player} --- ${secondplace.mmr} mmr` },
+        { name: '3. sæti :third_place:', value: `${thirdplace.player} --- ${thirdplace.mmr} mmr` },
+        { name: '4. sæti', value: `${fourthplace.player} --- ${fourthplace.mmr} mmr` },
+        { name: '5. sæti', value: `${fifthplace.player} --- ${fifthplace.mmr} mmr` },
       )
 
     await interaction.editReply({ content: null, embeds: [exampleEmbed] });

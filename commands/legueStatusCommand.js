@@ -2,10 +2,14 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
 const axios = require("axios");
 const nodeHtmlToImage = require('node-html-to-image');
-// const font2base64 = require('node-font2base64');
+const font2base64 = require('node-font2base64');
 const cheerio = require("cheerio");
 
 commandName = 'staðan';
+
+truncate = (str, n) => {
+  return (str.length > n) ? str.substr(0, n-1) : str;
+};
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -60,7 +64,7 @@ module.exports = {
         else if (toornamentStandingsArray[i].name === 'Víkingur Ólafsvík')
           toornamentStandingsArray[i].logo = 'https://i.ibb.co/4m4zpr8/V.png'
         else if (toornamentStandingsArray[i].name === 'Pushin P')
-          toornamentStandingsArray[i].logo = 'https://i.ibb.co/KbcVZ5s/Somnio-logo-new-resized.png'
+          toornamentStandingsArray[i].logo = 'https://i.ibb.co/q0Mw7p7/pushinp.png'
         else if (toornamentStandingsArray[i].name === 'Breaking Sad')
           toornamentStandingsArray[i].logo = 'https://i.ibb.co/dbPGgSB/Breaking-Sad.png'
         else if (toornamentStandingsArray[i].name === '354 Esports')
@@ -71,7 +75,7 @@ module.exports = {
 
 
 
-      // const _data = font2base64.encodeToDataUrlSync('../my/awesome/font.ttf')
+      const _data = font2base64.encodeToDataUrlSync('./LEMONMILK-Medium.ttf')
 
       let _htmlTemplate = `<!DOCTYPE html>
       <html lang="en">
@@ -87,7 +91,7 @@ module.exports = {
           
           @font-face {
             font-family: 'Lemonmilk';
-            src: url(https://drive.google.com/file/d/1gXJZp4caID-pm-YfaityFjOYLcxGi0fx/view?usp=share_link) format('opentype');
+            src: url(${_data}) format('woff2');
           }
 
           body {
@@ -167,7 +171,7 @@ module.exports = {
         <div class="background">
           <div class="StandingsRow">
             <img class="Logo" src="${toornamentStandingsArray[0].logo}" alt=''></img>
-            <p class="pname">${toornamentStandingsArray[0].name}</p>
+            <p class="pname">${truncate(toornamentStandingsArray[0].name, 15)}</p>
             <p class="pplayed">${toornamentStandingsArray[0].played}</p>
             <p class="pwon">${toornamentStandingsArray[0].won}</p>
             <p class="plost">${toornamentStandingsArray[0].lost}</p>
@@ -176,7 +180,7 @@ module.exports = {
           </div>
           <div class="StandingsRow">
             <img class="Logo" src="${toornamentStandingsArray[1].logo}" alt=''></img>
-            <p class="pname">${toornamentStandingsArray[1].name}</p>
+            <p class="pname">${truncate(toornamentStandingsArray[1].name, 15)}</p>
             <p class="pplayed">${toornamentStandingsArray[1].played}</p>
             <p class="pwon">${toornamentStandingsArray[1].won}</p>
             <p class="plost">${toornamentStandingsArray[1].lost}</p>
@@ -185,7 +189,7 @@ module.exports = {
           </div>
           <div class="StandingsRow">
             <img class="Logo" src="${toornamentStandingsArray[2].logo}" alt=''></img>
-            <p class="pname">${toornamentStandingsArray[2].name}</p>
+            <p class="pname">${truncate(toornamentStandingsArray[2].name, 15)}</p>
             <p class="pplayed">${toornamentStandingsArray[2].played}</p>
             <p class="pwon">${toornamentStandingsArray[2].won}</p>
             <p class="plost">${toornamentStandingsArray[2].lost}</p>
@@ -194,7 +198,7 @@ module.exports = {
           </div>
           <div class="StandingsRow">
             <img class="Logo" src="${toornamentStandingsArray[3].logo}" alt=''></img>
-            <p class="pname">${toornamentStandingsArray[3].name}</p>
+            <p class="pname">${truncate(toornamentStandingsArray[3].name, 15)}</p>
             <p class="pplayed">${toornamentStandingsArray[3].played}</p>
             <p class="pwon">${toornamentStandingsArray[3].won}</p>
             <p class="plost">${toornamentStandingsArray[3].lost}</p>
@@ -203,7 +207,7 @@ module.exports = {
           </div>
           <div class="StandingsRow">
             <img class="Logo" src="${toornamentStandingsArray[4].logo}" alt=''></img>
-            <p class="pname">${toornamentStandingsArray[4].name}</p>
+            <p class="pname">${truncate(toornamentStandingsArray[4].name, 15)}</p>
             <p class="pplayed">${toornamentStandingsArray[4].played}</p>
             <p class="pwon">${toornamentStandingsArray[4].won}</p>
             <p class="plost">${toornamentStandingsArray[4].lost}</p>
@@ -212,7 +216,7 @@ module.exports = {
           </div>
           <div class="StandingsRow">
             <img class="Logo" src="${toornamentStandingsArray[5].logo}" alt=''></img>
-            <p class="pname">${toornamentStandingsArray[5].name}</p>
+            <p class="pname">${truncate(toornamentStandingsArray[5].name, 15)}</p>
             <p class="pplayed">${toornamentStandingsArray[5].played}</p>
             <p class="pwon">${toornamentStandingsArray[5].won}</p>
             <p class="plost">${toornamentStandingsArray[5].lost}</p>
@@ -221,7 +225,7 @@ module.exports = {
           </div>
           <div class="StandingsRow">
             <img class="Logo" src="${toornamentStandingsArray[6].logo}" alt=''></img>
-            <p class="pname">${toornamentStandingsArray[6].name}</p>
+            <p class="pname">${truncate(toornamentStandingsArray[6].name, 15)}</p>
             <p class="pplayed">${toornamentStandingsArray[6].played}</p>
             <p class="pwon">${toornamentStandingsArray[6].won}</p>
             <p class="plost">${toornamentStandingsArray[6].lost}</p>
@@ -230,7 +234,7 @@ module.exports = {
           </div>
           <div class="StandingsRow">
             <img class="Logo" src="${toornamentStandingsArray[7].logo}" alt=''></img>
-            <p class="pname">${toornamentStandingsArray[7].name}</p>
+            <p class="pname">${truncate(toornamentStandingsArray[7].name, 15)}</p>
             <p class="pplayed">${toornamentStandingsArray[7].played}</p>
             <p class="pwon">${toornamentStandingsArray[7].won}</p>
             <p class="plost">${toornamentStandingsArray[7].lost}</p>
