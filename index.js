@@ -33,6 +33,29 @@ client.on('interactionCreate', async interaction => {
   }
 });
 
+function isGameDay() {
+  const specialDays = [
+    '2023-04-11',
+    '2023-04-13',
+    '2023-04-18',
+    '2023-04-20',
+    '2023-04-25',
+    '2023-04-27',
+    '2023-05-11',
+    '2023-05-13',
+    '2023-05-14'
+  ];
+
+  firsturslit = ['2023-04-30'];
+
+  const today = new Date();
+  const formattedDate = today.toISOString().substring(0, 10);
+
+  let returnValue = specialDays.includes(formattedDate) ? 'https://tenor.com/view/yes-nicken-gif-25213050' : 'https://tenor.com/view/no-way-dude-no-oh-bugs-bunny-bugs-gif-22941840';
+  returnValue = firsturslit.includes(formattedDate) ? 'https://tenor.com/view/i-mean-yeah-kind-of-sort-of-yes-gif-16557123' : returnValue;
+  return returnValue;
+}
+
 
 client.on("messageCreate", async (message) => {
 
@@ -40,10 +63,35 @@ client.on("messageCreate", async (message) => {
     message.reply("Stormur er heiti vindhraðabils, sem svarar til 9 vindstiga (20,8 - 24,4 m/s) á vindstigakvarðanum (Beaufortskvarðanum). Veðurstofan gefur út stormviðvörun, þegar spáð er vindhraða yfir 20 m/s.")
   }
   if (message.content == '!kartoflan' || message.content == '!kartofla') {
-    message.reply("Kartoflan er heit! Kartofla hefur verið að sjá um liquipedia síðu fyrir Arena deildina. Checkaðu á henni hér: https://liquipedia.net/rocketleague/Icelandic_Esports_League/Season_4/League_Play.")
+    message.reply("Kartoflan er heit! Kartofla hefur verið að sjá um liquipedia síðu fyrir RLÍS deildina. Checkaðu á henni hér: https://liquipedia.net/rocketleague/Icelandic_Esports_League/Season_6/League_Play.")
   }
   if (message.content == '!mammsa') {
     message.reply("MÓÐIR ALLRAR TÖLFRÆÐI")
+  }
+  if (message.content == '!isitgameday') {
+    message.reply(isGameDay())
+  }
+  if (message.content == '!isitvaddimah') {
+    const attachment = new MessageAttachment('Vaddimah.mp4');
+    const messageAttach = {
+      files: [attachment],
+    };
+    // message.channel.send('Always has been:', message);
+    message.reply({
+      content: 'Always has been:',
+      files: [attachment],
+    });
+  }
+  if (message.content == '!hannerflippari') {
+    const attachment = new MessageAttachment('dingo.jpg');
+    const messageAttach = {
+      files: [attachment],
+    };
+    // message.channel.send('Always has been:', message);
+    message.reply({
+      content: '"Im gonna be a father!!!" - circa 1999:',
+      files: [attachment],
+    });
   }
   // if (message.content == '!dingo') {
   // let url = "https://api.tracker.gg/api/v2/rocket-league/standard/profile/steam/dingoremote"
@@ -155,7 +203,7 @@ const streamCheckerSheetsVersion = async () => {
         let isMature = streaminfo.is_mature;
         if (isMature) continue;
         let game = streaminfo.game_name;
-        if(game != 'Rocket League' && game != 'Just Chatting') continue;
+        if (game != 'Rocket League' && game != 'Just Chatting') continue;
         let userid = streaminfo.user_id;
         let streamerName = streaminfo.user_login.toLowerCase();
         let title = streaminfo.title;

@@ -16,3 +16,6 @@ docker push dingofox/rlis-discord-bot
 ```
 node .\deploy-commands.js
 ```
+
+# TODO
+[ ] Add new text to readme file for running the bot.
