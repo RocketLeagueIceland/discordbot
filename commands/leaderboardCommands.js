@@ -79,13 +79,6 @@ module.exports = {
 
     let url = `https://api.tracker.gg/api/v1/rocket-league/standard/leaderboards?type=playlist&platform=all&board=default&country=is&playlist=${playlistNumber}&take=100`
 
-    // const { data } = await axios.get(url,
-    //   {
-    //     headers: {
-    //       'User-Agent': "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:87.0) Gecko/20100101 Firefox/87.0"
-    //     }
-    //   });
-
 
     const browser = await puppeteer.launch({
       headless: true,
